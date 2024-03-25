@@ -7,11 +7,8 @@ from tabulate import tabulate
 
 dataset = pd.read_csv('./dataset.csv', index_col=None) # Importamos el dataset
 
-# Se crea un grafo con los datos del dataset
+# Se crea un grafico con los datos del dataset
 TRANSMI = nx.from_pandas_edgelist(dataset, source='origen', target='destino', edge_attr='longitud de interaccion')
-# TRANSMI.nodes() Nodos
-# TRANSMI.edges() Aristas
-# TRANSMI.order() Ordenar elementos
 
 # Se utiliza el algoritmo de Dijkstra para saber la ruta más rápida entre destinos A y B
 destinos = [
@@ -30,24 +27,24 @@ for destino in destinos:
 # Result
 print(tabulate(posibles_rutas, tablefmt="pretty"))
 
-# Traemos algunas estaciones destino del dataset
+# Se Traen algunas estaciones destino del dataset
 algunas_estaciones = dataset[['destino']]
-# Lo convertidos a un Array
+# Se convierte a un Array
 destinos = algunas_estaciones.to_numpy()
-# Definimos un array vacio para guardar el numero de rutas por estacion
+# Se define un array vacio para guardar el numero de rutas por estacion
 rutas = []
-# Eliminamos los valores repetidos del array
+# Se eliminan los valores repetidos del array
 portales = np.unique(destinos)
 
-# Iteramos sobre el array para saber la cantidad de rutas
+# se Itera sobre el array para saber la cantidad de rutas
 for portal in portales:
-  # Contamos las coincidencias de la estación en las rutas destino
+# se cuentan las coincidencias de la estación en las rutas destino
   cantidad_rutas = np.count_nonzero(destinos == portal)
-  # Guardamos el valor
+  # se guarda el valor
   rutas.append(cantidad_rutas)
 
-# Cambiamos el tamaño de la gráfica
+# Se cambia el tamaño de la gráfica
 plt.figure(figsize=(15, 5))
-# Definimos los valores de la gráfica de dispersión
+# se Define los valores de la gráfica de dispersión
 plt.scatter(portales, rutas)
 plt.show()
